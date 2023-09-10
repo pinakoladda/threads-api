@@ -2,14 +2,18 @@ import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;
 
-export const Post = new Schema({
+const Post = new Schema({
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
   text: String,
   photo: String,
   date: {
     type: Date,
     required: true,
   },
-  udateDate: Date,
+  updateDate: Date,
   like: Boolean,
 });
 

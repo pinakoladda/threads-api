@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import { passwordEncryption } from "../utils/encryption.js";
 
@@ -45,5 +46,6 @@ export const signin = async (req, res) => {
   if (!user) {
     return res.status(401).json({ message: "wrong login or password" });
   }
-  return res.status(200).json({ message: "done!" });
+  const token = jwt.sign({ login }, process.env.JWT_SECRET);
+  return res.status(200).json({ token });
 };

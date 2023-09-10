@@ -3,7 +3,8 @@ import Post from "../models/post.js";
 export const createPost = async (req, res) => {
   const { text, photo } = req.body;
   const date = Date.now();
-  const post = new Post({ text, photo, date });
+  const author = res.locals.user;
+  const post = new Post({ text, photo, date, author });
   if (!text && !photo) {
     return res.status(400).send({ message: "post must have text or photo" });
   }
@@ -17,7 +18,7 @@ export const createPost = async (req, res) => {
 };
 
 export const getAllPosts = async (req, res) => {
-  const posts = await Post.find();
+  const posts = await Post.find().populate("author");
   return res.json(posts);
 };
 
