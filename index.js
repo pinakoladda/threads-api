@@ -3,9 +3,11 @@ import { connectDB } from "./utils/database.js";
 import postRouter from "./routes/post.js";
 import bp from "body-parser";
 import { loggerMiddleware } from "./middlewares/logger.js";
+import cors from "cors";
 
 const port = 3000;
 const app = express();
+app.use(cors());
 app.use(bp.json());
 
 connectDB();
