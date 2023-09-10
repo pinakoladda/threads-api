@@ -1,9 +1,12 @@
 import Post from "../models/post.js";
 
 export const createPost = async (req, res) => {
-  const { text, photo, like } = req.body;
+  const { text, photo } = req.body;
   const date = Date.now();
-  const post = new Post({ text, photo, date, like });
+  const post = new Post({ text, photo, date });
+  if (!text & !photo) {
+    return res.status(400).send({ message: "post must have text or photo" });
+  }
   try {
     await post.save();
   } catch (err) {
@@ -48,7 +51,7 @@ export const updatePost = async (req, res) => {
   }
   post.text = text || post.text;
   post.photo = photo || post.photo;
-  post.udateDate = updateDate || post.updateDate;
+  post.udateDate = updateDate;
 
   await post.save();
   return res.status(200).json({ message: "Post successfully updated" });
