@@ -4,7 +4,7 @@ export const createPost = async (req, res) => {
   const { text, photo } = req.body;
   const date = Date.now();
   const post = new Post({ text, photo, date });
-  if (!text & !photo) {
+  if (!text && !photo) {
     return res.status(400).send({ message: "post must have text or photo" });
   }
   try {

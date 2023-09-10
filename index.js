@@ -1,9 +1,11 @@
+import "dotenv/config";
 import express from "express";
 import { connectDB } from "./utils/database.js";
 import postRouter from "./routes/post.js";
 import bp from "body-parser";
 import { loggerMiddleware } from "./middlewares/logger.js";
 import cors from "cors";
+import { signin, signup } from "./controllers/auth.js";
 
 const port = 3000;
 const app = express();
@@ -15,6 +17,8 @@ connectDB();
 app.use(loggerMiddleware);
 
 app.use("/posts", postRouter);
+app.post("/signup", signup);
+app.post("/signin", signin);
 
 app.listen(port, () => {
   console.log(`App listening on port: ${port}`);
