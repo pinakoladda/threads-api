@@ -33,7 +33,8 @@ export const signup = async (req, res) => {
     console.error(err);
     return res.status(500).json({ message: "Internal server error" });
   }
-  return res.sendStatus(200);
+  const token = jwt.sign({ login }, process.env.JWT_SECRET);
+  return res.status(200).json({ token });
 };
 
 export const signin = async (req, res) => {
