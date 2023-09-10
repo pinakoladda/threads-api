@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.use("/post", postRouter);
+app.use("/posts", postRouter);
 
 app.listen(port, () => {
   console.log(`App listening on port: ${port}`);
