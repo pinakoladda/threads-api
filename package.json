@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "name": "threds-api",
+  "name": "threads-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pinakoladda/threds-api.git"
+    "url": "git+https://github.com/pinakoladda/threads-api.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/pinakoladda/threds-api/issues"
+    "url": "https://github.com/pinakoladda/threads-api/issues"
   },
-  "homepage": "https://github.com/pinakoladda/threds-api#readme",
+  "homepage": "https://github.com/pinakoladda/threads-api#readme",
   "devDependencies": {
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
