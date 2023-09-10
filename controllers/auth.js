@@ -49,3 +49,7 @@ export const signin = async (req, res) => {
   const token = jwt.sign({ login }, process.env.JWT_SECRET);
   return res.status(200).json({ token });
 };
+
+export const getUser = async (req, res) => {
+  return res.json(res.locals.user);
+};

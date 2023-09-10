@@ -5,7 +5,7 @@ import postRouter from "./routes/post.js";
 import bp from "body-parser";
 import { loggerMiddleware } from "./middlewares/logger.js";
 import cors from "cors";
-import { signin, signup } from "./controllers/auth.js";
+import { getUser, signin, signup } from "./controllers/auth.js";
 import { authMiddleware } from "./middlewares/auth.js";
 
 const port = 3000;
@@ -18,6 +18,7 @@ connectDB();
 app.use(loggerMiddleware);
 
 app.use("/posts", authMiddleware, postRouter);
+app.get("/user", authMiddleware, getUser);
 app.post("/signup", signup);
 app.post("/signin", signin);
 
