@@ -37,3 +37,17 @@ export const deletePost = async (req, res) => {
   await Post.deleteOne({ _id: id });
   return res.status(200).json({ message: "post deleted" });
 };
+
+export const updatePost = async (req, res) => {
+  const { id } = req.params;
+  const { text, photo } = req.body;
+  const post = await Post.findById(id);
+  if (!post) {
+    return res.status(404).json({ message: "This post is not found" });
+  }
+  post.text = text || post.text;
+  post.photo = photo || post.photo;
+
+  await post.save();
+  return res.status(200).json({ message: "Post successfully updated" });
+};
