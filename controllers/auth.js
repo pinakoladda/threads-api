@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import { passwordEncryption } from "../utils/encryption.js";
+import { uploadFileToS3 } from "../utils/s3.js";
 
 export const signup = async (req, res) => {
   const { login, password, email, name, surname, birthDate, gender } = req.body;
@@ -9,6 +10,7 @@ export const signup = async (req, res) => {
       .status(400)
       .send({ message: "login, password, email and name are required" });
   }
+
   const duplicatetedUser = await User.findOne({ $or: [{ login }, { email }] });
 
   if (duplicatetedUser && duplicatetedUser.login === login) {
@@ -16,6 +18,13 @@ export const signup = async (req, res) => {
   }
   if (duplicatetedUser && duplicatetedUser.email === email) {
     return res.status(400).json({ message: "Email already exists" });
+  }
+  let avatar;
+
+  if (req.file) {
+    const extension = req.file.mimetype.split("/")[1];
+
+    avatar = await uploadFileToS3(req.file, `${Date.now()}.${extension}`);
   }
 
   const user = new User({
@@ -26,7 +35,9 @@ export const signup = async (req, res) => {
     surname,
     birthDate,
     gender,
+    avatar,
   });
+
   try {
     await user.save();
   } catch (err) {

@@ -7,11 +7,14 @@ import { loggerMiddleware } from "./middlewares/logger.js";
 import cors from "cors";
 import { getUser, signin, signup } from "./controllers/auth.js";
 import { authMiddleware } from "./middlewares/auth.js";
+import multer from "multer";
 
+const upload = multer();
 const port = 3000;
 const app = express();
 app.use(cors());
 app.use(bp.json());
+app.use(bp.urlencoded({ extended: true }));
 
 connectDB();
 
@@ -19,7 +22,7 @@ app.use(loggerMiddleware);
 
 app.use("/posts", authMiddleware, postRouter);
 app.get("/user", authMiddleware, getUser);
-app.post("/signup", signup);
+app.post("/signup", upload.single("avatar"), signup);
 app.post("/signin", signin);
 
 app.listen(port, () => {
