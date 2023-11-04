@@ -14,7 +14,10 @@ const Post = new Schema({
     required: true,
   },
   updateDate: Date,
-  like: Boolean,
+  likes: {
+    type: [Schema.Types.ObjectId],
+    ref: "User",
+  },
 });
 
 export default mongoose.model("Post", Post);

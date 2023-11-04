@@ -11,6 +11,9 @@ export const authMiddleware = async (req, res, next) => {
     const data = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findOne({ login: data.login });
 
+    if (!user) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
     res.locals.user = user;
   } catch (err) {
     return res.status(401).json({ message: "Invalid token" });
