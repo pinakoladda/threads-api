@@ -39,6 +39,25 @@ export const getAllPosts = async (req, res) => {
   return res.json(data);
 };
 
+export const getUserPosts = async (req, res) => {
+  const { userId } = req.params;
+  const currentUserId = res.locals.user._id;
+
+  const posts = await Post.find({ author: userId })
+    .sort({ date: -1 })
+    .populate(postAuthorPopulate);
+
+  const data = posts.map((post) => {
+    return {
+      ...post._doc,
+      likes: post.likes.length,
+      isLiked: post.likes.includes(currentUserId),
+    };
+  });
+
+  return res.json(data);
+};
+
 export const getPost = async (req, res) => {
   const { id } = req.params;
   const post = await Post.findById(id).populate(postAuthorPopulate);
