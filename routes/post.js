@@ -18,6 +18,6 @@ router.delete("/:id", deletePost);
 router.patch("/:id", updatePost);
 router.put("/:id/like", likePost);
 router.delete("/:id/like", dislikePost);
-router.get("/:userId", getUserPosts);
+router.get("/user/:userId", getUserPosts);
 
 export default router;
