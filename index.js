@@ -8,6 +8,7 @@ import cors from "cors";
 import { getUser, signin, signup } from "./controllers/auth.js";
 import { authMiddleware } from "./middlewares/auth.js";
 import multer from "multer";
+import { getUserByLogin } from "./controllers/user.js";
 
 const upload = multer();
 const port = 3000;
@@ -22,6 +23,7 @@ app.use(loggerMiddleware);
 
 app.use("/posts", authMiddleware, postRouter);
 app.get("/user", authMiddleware, getUser);
+app.get("/user/:login", authMiddleware, getUserByLogin);
 app.post("/signup", upload.single("avatar"), signup);
 app.post("/signin", signin);
 
