@@ -132,7 +132,7 @@ export const dislikePost = async (req, res) => {
     return res.status(400).json({ message: "Post already disliked" });
   }
 
-  post.likes = post.likes.filter((like) => like === userId);
+  post.likes = post.likes.filter((like) => String(like) !== String(userId));
 
   await post.save();
 
