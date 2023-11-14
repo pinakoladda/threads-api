@@ -77,10 +77,17 @@ export const getPost = async (req, res) => {
 
 export const deletePost = async (req, res) => {
   const { id } = req.params;
+  const userId = res.locals.user._id;
   const post = await Post.findById(id);
+
   if (!post) {
     return res.status(404).json({ message: "This post is not found" });
   }
+
+  if (userId !== post.author) {
+    return res.status(403).json({ message: "You can't delete this post" });
+  }
+
   await Post.deleteOne({ _id: id });
   return res.status(200).json({ message: "post deleted" });
 };
