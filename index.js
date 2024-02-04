@@ -10,8 +10,9 @@ import { authMiddleware } from "./middlewares/auth.js";
 import multer from "multer";
 import { getUserByLogin } from "./controllers/user.js";
 
+const { SERVER_PORT } = process.env;
 const upload = multer();
-const port = 3000;
+const port = SERVER_PORT;
 const app = express();
 app.use(cors());
 app.use(bp.json());
