@@ -84,7 +84,7 @@ export const deletePost = async (req, res) => {
     return res.status(404).json({ message: "This post is not found" });
   }
 
-  if (userId !== post.author) {
+  if (String(userId) !== String(post.author)) {
     return res.status(403).json({ message: "You can't delete this post" });
   }
 
