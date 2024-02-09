@@ -23,7 +23,14 @@ export const createPost = async (req, res) => {
 };
 
 export const getAllPosts = async (req, res) => {
-  const posts = await Post.find()
+  const { query } = req.query;
+  const posts = await Post.find(
+    query
+      ? {
+          text: { $regex: query, $options: "i" },
+        }
+      : {},
+  )
     .sort({ date: -1 })
     .populate(postAuthorPopulate);
   const userId = res.locals.user._id;
