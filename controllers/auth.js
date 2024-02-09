@@ -44,7 +44,9 @@ export const signup = async (req, res) => {
     console.error(err);
     return res.status(500).json({ message: "Internal server error" });
   }
-  const token = jwt.sign({ login }, process.env.JWT_SECRET);
+  const token = jwt.sign({ login }, process.env.JWT_SECRET, {
+    expiresIn: process.env.TOKEN_EXPIRED_TIME,
+  });
   return res.status(200).json({ token });
 };
 
@@ -58,7 +60,9 @@ export const signin = async (req, res) => {
   if (!user) {
     return res.status(401).json({ message: "wrong login or password" });
   }
-  const token = jwt.sign({ login }, process.env.JWT_SECRET);
+  const token = jwt.sign({ login }, process.env.JWT_SECRET, {
+    expiresIn: process.env.TOKEN_EXPIRED_TIME,
+  });
   return res.status(200).json({ token });
 };
 
